@@ -241,6 +241,128 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------------
+  // 7b. Interactive Pixel Card Canvas Effect (Project Cards)
+  // -------------------------------------------------------------
+  if (projectCards && projectCards.length && !prefersReducedMotion) {
+    projectCards.forEach(card => {
+      const canvas = document.createElement('canvas');
+      canvas.className = 'pixel-card-canvas';
+      card.appendChild(canvas);
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let particles = [];
+      let animationFrameId = null;
+      let isHovered = false;
+      let mouseX = 0;
+      let mouseY = 0;
+
+      function resizeCanvas() {
+        canvas.width = card.clientWidth;
+        canvas.height = card.clientHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      class PixelParticle {
+        constructor(x, y) {
+          const angle = Math.random() * Math.PI * 2;
+          const radius = Math.random() * 35; // area of illumination
+          this.x = x + Math.cos(angle) * radius;
+          this.y = y + Math.sin(angle) * radius;
+          this.size = Math.random() * 2 + 2; // 2px to 4px
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.speedY = -Math.random() * 0.6 - 0.1; // slowly floats up
+          this.alpha = 1.0;
+          this.decay = Math.random() * 0.02 + 0.015; // smooth fade
+          this.color = Math.random() > 0.4 ? '255, 255, 255' : '200, 200, 200';
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          this.alpha -= this.decay;
+        }
+
+        draw() {
+          const gridX = Math.floor(this.x / 4) * 4;
+          const gridY = Math.floor(this.y / 4) * 4;
+          ctx.fillStyle = `rgba(${this.color}, ${this.alpha * 0.45})`;
+          ctx.fillRect(gridX, gridY, this.size, this.size);
+        }
+      }
+
+      function animatePixels() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (isHovered) {
+          const spawnCount = Math.random() > 0.5 ? 2 : 1;
+          for (let i = 0; i < spawnCount; i++) {
+            particles.push(new PixelParticle(mouseX, mouseY));
+          }
+        }
+
+        particles.forEach((p, index) => {
+          p.update();
+          if (p.alpha <= 0) {
+            particles.splice(index, 1);
+          } else {
+            p.draw();
+          }
+        });
+
+        if (!isHovered && particles.length === 0) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          animationFrameId = null;
+        } else {
+          animationFrameId = requestAnimationFrame(animatePixels);
+        }
+      }
+
+      card.addEventListener('mouseenter', () => {
+        isHovered = true;
+        if (!animationFrameId) {
+          animatePixels();
+        }
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHovered = false;
+      });
+
+      // Touch support
+      card.addEventListener('touchstart', (e) => {
+        isHovered = true;
+        const rect = card.getBoundingClientRect();
+        const touch = e.touches[0];
+        mouseX = touch.clientX - rect.left;
+        mouseY = touch.clientY - rect.top;
+        if (!animationFrameId) {
+          animatePixels();
+        }
+      }, { passive: true });
+
+      card.addEventListener('touchmove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const touch = e.touches[0];
+        mouseX = touch.clientX - rect.left;
+        mouseY = touch.clientY - rect.top;
+      }, { passive: true });
+
+      card.addEventListener('touchend', () => {
+        isHovered = false;
+      });
+    });
+  }
+
+  // -------------------------------------------------------------
   // 8. Section Canvas Managers (Modular Cosmic Animations)
   // -------------------------------------------------------------
   const canvases = {};
@@ -614,15 +736,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Majestic Cinematic Meteor crossing the night sky
+    // Majestic Cinematic Star crossing the night sky
     shootingStar = {
-      startX: -150,
-      startY: canvas.height * 0.15,
-      endX: canvas.width + 150,
-      endY: canvas.height * 0.85,
-      size: 8,
-      glowSize: 35,
-      trailLength: 350,
+      startX: -250,
+      startY: canvas.height * 0.1,
+      endX: canvas.width + 250,
+      endY: canvas.height * 0.9,
+      size: 22,
+      glowSize: 45,
+      trailLength: 400,
       phase: 0
     };
   }
@@ -645,56 +767,90 @@ document.addEventListener('DOMContentLoaded', () => {
       
       shootingStar.phase += 0.05;
       const glowAlpha = Math.sin(shootingStar.phase) * 0.15 + 0.85;
+      const pulse = Math.sin(shootingStar.phase) * 0.12 + 0.88;
 
-      // Shooting star diagonal trails
+      // Shooting star diagonal trails (layered opacity)
       if (!prefersReducedMotion) {
         const dx = shootingStar.endX - shootingStar.startX;
         const dy = shootingStar.endY - shootingStar.startY;
         const angle = Math.atan2(dy, dx);
-        
-        // Primary sharp trail
-        const trailX1 = cx - Math.cos(angle) * shootingStar.trailLength;
-        const trailY1 = cy - Math.sin(angle) * shootingStar.trailLength;
+        const cosA = Math.cos(angle);
+        const sinA = Math.sin(angle);
 
-        const trailGrad1 = ctx.createLinearGradient(cx, cy, trailX1, trailY1);
-        trailGrad1.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.9})`);
-        trailGrad1.addColorStop(0.3, `rgba(255, 255, 255, ${glowAlpha * 0.4})`);
-        trailGrad1.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-        ctx.strokeStyle = trailGrad1;
-        ctx.lineWidth = shootingStar.size * 0.45;
+        // Layer 3: Ambient plasma glow
+        const len3 = shootingStar.trailLength * 2.2;
+        const trailX3 = cx - cosA * len3;
+        const trailY3 = cy - sinA * len3;
+        const grad3 = ctx.createLinearGradient(cx, cy, trailX3, trailY3);
+        grad3.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.15})`);
+        grad3.addColorStop(0.3, `rgba(255, 255, 255, ${glowAlpha * 0.05})`);
+        grad3.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.strokeStyle = grad3;
+        ctx.lineWidth = shootingStar.size * 1.5;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
-        ctx.lineTo(trailX1, trailY1);
+        ctx.lineTo(trailX3, trailY3);
         ctx.stroke();
 
-        // Secondary wide glow trail
-        const trailX2 = cx - Math.cos(angle) * (shootingStar.trailLength * 1.4);
-        const trailY2 = cy - Math.sin(angle) * (shootingStar.trailLength * 1.4);
-
-        const trailGrad2 = ctx.createLinearGradient(cx, cy, trailX2, trailY2);
-        trailGrad2.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.3})`);
-        trailGrad2.addColorStop(0.4, `rgba(255, 255, 255, ${glowAlpha * 0.1})`);
-        trailGrad2.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
-        ctx.strokeStyle = trailGrad2;
-        ctx.lineWidth = shootingStar.size * 1.5;
+        // Layer 2: Primary glow trail
+        const len2 = shootingStar.trailLength * 1.5;
+        const trailX2 = cx - cosA * len2;
+        const trailY2 = cy - sinA * len2;
+        const grad2 = ctx.createLinearGradient(cx, cy, trailX2, trailY2);
+        grad2.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.35})`);
+        grad2.addColorStop(0.4, `rgba(255, 255, 255, ${glowAlpha * 0.15})`);
+        grad2.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.strokeStyle = grad2;
+        ctx.lineWidth = shootingStar.size * 0.6;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
         ctx.lineTo(trailX2, trailY2);
         ctx.stroke();
+
+        // Layer 1: Sharp core trail
+        const len1 = shootingStar.trailLength;
+        const trailX1 = cx - cosA * len1;
+        const trailY1 = cy - sinA * len1;
+        const grad1 = ctx.createLinearGradient(cx, cy, trailX1, trailY1);
+        grad1.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.95})`);
+        grad1.addColorStop(0.2, `rgba(255, 255, 255, ${glowAlpha * 0.5})`);
+        grad1.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.strokeStyle = grad1;
+        ctx.lineWidth = shootingStar.size * 0.2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(trailX1, trailY1);
+        ctx.stroke();
       }
 
       // Draw head with glowing shadow effect
-      ctx.shadowBlur = shootingStar.glowSize;
+      ctx.shadowBlur = shootingStar.glowSize * pulse;
       ctx.shadowColor = 'rgba(255, 255, 255, 0.95)';
       ctx.fillStyle = `rgba(255, 255, 255, ${glowAlpha})`;
+      
+      // Draw 4-point Flare Star shape
       ctx.beginPath();
-      ctx.arc(cx, cy, shootingStar.size, 0, Math.PI * 2);
+      const currentR = shootingStar.size * pulse;
+      ctx.moveTo(cx, cy - currentR);
+      ctx.quadraticCurveTo(cx, cy, cx + currentR, cy);
+      ctx.quadraticCurveTo(cx, cy, cx, cy + currentR);
+      ctx.quadraticCurveTo(cx, cy, cx - currentR, cy);
+      ctx.quadraticCurveTo(cx, cy, cx, cy - currentR);
+      ctx.closePath();
       ctx.fill();
       
       // Reset canvas context shadow settings
       ctx.shadowBlur = 0;
+
+      // Draw Cross Flare Lens Flare lines
+      ctx.strokeStyle = `rgba(255, 255, 255, ${glowAlpha * 0.3})`;
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - currentR * 1.6);
+      ctx.lineTo(cx, cy + currentR * 1.6);
+      ctx.moveTo(cx - currentR * 1.6, cy);
+      ctx.lineTo(cx + currentR * 1.6, cy);
+      ctx.stroke();
 
       // Progressively reveal categories & expand skill bars as the shooting star crosses
       if (!prefersReducedMotion) {
