@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Yagneswar B - Portfolio. B.Tech CSE Student specializing in Cybersecurity, Systems Programming, and Backend Development.">
+  <title>Yagneswar B // Systems &amp; Security Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Canvas for liquid green pixel cursor trail -->
+  <canvas id="trail-canvas"></canvas>
+
+  <!-- Futuristic Header / Navigation -->
+  <header id="header">
+    <div class="nav-container">
+      <a href="#about" class="logo">
+        <span>&lt;</span>YAGNESWAR<span> .B&gt;</span>
+      </a>
+      
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#about" class="nav-link active">01. About Me</a></li>
+        <li><a href="#academic" class="nav-link">02. Academic Details</a></li>
+        <li><a href="#experience" class="nav-link">03. Internship Experience</a></li>
+        <li><a href="#projects" class="nav-link">04. Projects</a></li>
+        <li><a href="#skills" class="nav-link">05. Skills</a></li>
+        <li><a href="#contact" class="nav-link">06. Get In Touch</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    
+    <!-- 01. About Me / Hero Section -->
+    <section id="about">
+      <canvas id="canvas-about" class="section-canvas"></canvas>
+      <div class="about-hero-grid">
+        <!-- Hero Details -->
+        <div class="reveal">
+          <h1 class="hero-name">YAGNESWAR <span class="glow-text">B</span></h1>
+          
+          <h2 class="hero-title">
+            <span>&gt;</span> 
+            <span id="typed-text"></span><span class="cursor">|</span>
+          </h2>
+          
+          <p class="hero-bio">
+            I am a student software developer and cybersecurity enthusiast currently pursuing B.Tech in CSE at SRMIST. 
+            I am deeply interested in backend architectures, cybersecurity testing, low-level system internals, and operating systems. 
+            I love learning how complex computer systems run under the hood and engineering tools to secure them.
+          </p>
+          
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">View Builds</a>
+            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+          </div>
+        </div>
+
+        <!-- Sci-Fi Avatar Card with User Image -->
+        <div class="avatar-container reveal">
+          <div class="avatar-frame">
+            <div class="avatar-content" style="padding: 0;">
+              <div class="pixelated-overlay"></div>
+              <img src="profile.png?v=2" alt="Yagneswar B Profile" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(10%) contrast(105%); z-index: 1;">
+              <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.85); padding: 0.75rem; text-align: center; border-top: 1px solid var(--border-subtle); backdrop-filter: blur(4px); z-index: 10;">
+                <h3 class="glow-text-accent" style="font-size: 0.95rem; margin: 0; font-family: var(--font-title);">YAGNESWAR .B</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider reveal">
+
+    <!-- 02. Academic Details Section -->
+    <section id="academic">
+      <canvas id="canvas-academic" class="section-canvas"></canvas>
+      
+      <!-- Education & College Details -->
+      <div class="education-container reveal">
+        <div class="section-header">
+          <span class="section-number">02 // ACADEMIC_RECORD</span>
+          <h2 class="section-title">Academic Details</h2>
+        </div>
+        
+        <div class="education-grid">
+          <!-- College Card -->
+          <div class="education-card">
+            <span class="edu-year">2023 — 2027</span>
+            <h4 class="edu-degree">Bachelor of Technology in CSE (Cybersecurity)</h4>
+            <p class="edu-college">SRM Institute of Science and Technology, Ramapuram</p>
+            <p class="edu-details">
+              Focusing on cryptography, network forensics, application penetration testing, operating systems, and computer architecture. 
+              Maintained a GPA of <strong>8.9</strong> till date in the current 4th year curriculum.
+            </p>
+          </div>
+
+          <!-- High School Card -->
+          <div class="education-card">
+            <span class="edu-year">2021 — 2023</span>
+            <h4 class="edu-degree">11th &amp; 12th Standard (Senior Secondary)</h4>
+            <p class="edu-college">Aakash Institute of Science and Technology, Vijayawada</p>
+            <p class="edu-details">
+              Completed major concentrations in science and mathematics. 
+              Graduated successfully with an aggregate score of <strong>91%</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider reveal">
+
+    <!-- 03. Internship Experience Section -->
+    <section id="experience">
+      <canvas id="canvas-experience" class="section-canvas"></canvas>
+      <div class="section-header reveal">
+        <span class="section-number">03 // WORKHISTORY</span>
+        <h2 class="section-title">Intern Experience</h2>
+      </div>
+
+      <div class="timeline single-item">
+        <!-- Experience Item 1 -->
+        <div class="timeline-item left reveal">
+          <div class="timeline-content">
+            <span class="timeline-date">MAY 2025 — JUNE 2025</span>
+            <h3 class="timeline-role">Cybersecurity Intern</h3>
+            <span class="timeline-company">Supraja Technologies</span>
+            <ul class="timeline-bullets">
+              <li>Assisted in analyzing web application response headers and security configs to identify misconfigurations.</li>
+              <li>Explored common authentication flow vulnerabilities, implementing test cases for validation checks.</li>
+              <li>Collaborated on documenting scanner profiles, threat mitigations, and automated security scanning guidelines.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider reveal">
+
+    <!-- 04. Projects Showcase -->
+    <section id="projects">
+      <canvas id="canvas-projects" class="section-canvas"></canvas>
+      <div class="section-header reveal">
+        <span class="section-number">04 // INDEXED_BUILDS</span>
+        <h2 class="section-title">Featured Projects</h2>
+      </div>
+
+      <!-- Category Filter Buttons -->
+      <div class="project-filters reveal">
+        <button class="filter-btn active" data-filter="all">ALL.SYS</button>
+        <button class="filter-btn" data-filter="systems">SYSTEMS</button>
+        <button class="filter-btn" data-filter="cybersecurity">SECURITY</button>
+        <button class="filter-btn" data-filter="fullstack">FULLSTACK</button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-grid">
+        <!-- Project 1: Custom OS Kernel -->
+        <div class="project-card reveal" data-category="systems">
+          <div class="project-image-placeholder">
+            <!-- Terminal CPU icon -->
+            <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+              <rect x="9" y="9" width="6" height="6"></rect>
+              <line x1="9" y1="1" x2="9" y2="4"></line>
+              <line x1="15" y1="1" x2="15" y2="4"></line>
+              <line x1="9" y1="20" x2="9" y2="23"></line>
+              <line x1="15" y1="20" x2="15" y2="23"></line>
+              <line x1="20" y1="9" x2="23" y2="9"></line>
+              <line x1="20" y1="15" x2="23" y2="15"></line>
+              <line x1="1" y1="9" x2="4" y2="9"></line>
+              <line x1="1" y1="15" x2="4" y2="15"></line>
+            </svg>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="project-tag">C</span>
+              <span class="project-tag">Assembly</span>
+              <span class="project-tag">x86 Arch</span>
+              <span class="project-tag">QEMU</span>
+            </div>
+            <h3 class="project-title">Custom OS Kernel</h3>
+            <p class="project-desc">Built a custom operating system kernel from scratch, exploring booting sequences, memory mappings, linker configurations, and low-level hardware-level interactions.</p>
+            <div class="project-links">
+              <a href="https://github.com/DragonB0i/MyKernel" target="_blank" rel="noopener" class="project-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                Source
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: GuardScanner-V2 -->
+        <div class="project-card reveal" data-category="cybersecurity">
+          <div class="project-image-placeholder">
+            <!-- Shield/Key Security icon -->
+            <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Flask</span>
+              <span class="project-tag">Requests</span>
+              <span class="project-tag">Sec-Audit</span>
+            </div>
+            <h3 class="project-title">GuardScanner-V2</h3>
+            <p class="project-desc">A web vulnerability scanner analyzing authentication flows and responses to detect weaknesses, weak credentials, and improper validation controls.</p>
+            <div class="project-links">
+              <a href="https://github.com/DragonB0i/GuardScanner-V2" target="_blank" rel="noopener" class="project-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                Source
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: SIEM System -->
+        <div class="project-card reveal" data-category="cybersecurity">
+          <div class="project-image-placeholder">
+            <!-- Server activity monitor icon -->
+            <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="12" x2="18" y2="12"></line>
+              <line x1="6" y1="12" x2="2" y2="12"></line>
+              <polyline points="10 16 12 8 14 16"></polyline>
+              <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+            </svg>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Flask</span>
+              <span class="project-tag">SQLite</span>
+              <span class="project-tag">Threat-Detect</span>
+            </div>
+            <h3 class="project-title">SIEM System</h3>
+            <p class="project-desc">Designed a centralized event monitoring platform aggregating system logs to detect anomalous activities, using threat-correlation rules and SQLite storage layers.</p>
+            <div class="project-links">
+              <a href="https://github.com/DragonB0i/tic-tac-toe-backend" target="_blank" rel="noopener" class="project-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                Source
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Online Tic Tac Toe Game -->
+        <div class="project-card reveal" data-category="fullstack">
+          <div class="project-image-placeholder">
+            <!-- Game Controller icon -->
+            <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="12" x2="10" y2="12"></line>
+              <line x1="8" y1="10" x2="8" y2="14"></line>
+              <line x1="15" y1="13" x2="15.01" y2="13"></line>
+              <line x1="18" y1="11" x2="18.01" y2="11"></line>
+              <rect x="2" y="6" width="20" height="12" rx="3" ry="3"></rect>
+            </svg>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">Render</span>
+              <span class="project-tag">APIs</span>
+            </div>
+            <h3 class="project-title">Tic Tac Toe Online</h3>
+            <p class="project-desc">A real-time multiplayer Tic Tac Toe game implementing backend moves handling, sessions, and game state management deployed on Render.</p>
+            <div class="project-links">
+              <a href="https://github.com/DragonB0i/tic-tac-toe-backend" target="_blank" rel="noopener" class="project-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                Source
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5: CommerceCore -->
+        <div class="project-card reveal" data-category="fullstack">
+          <div class="project-image-placeholder">
+            <!-- Shopping Cart icon -->
+            <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+          </div>
+          <div class="project-content">
+            <div class="project-tags">
+              <span class="project-tag">Java</span>
+              <span class="project-tag">Spring Boot</span>
+              <span class="project-tag">SQL</span>
+              <span class="project-tag">REST APIs</span>
+            </div>
+            <h3 class="project-title">CommerceCore</h3>
+            <p class="project-desc">A full-stack e-commerce platform using Java and Spring Boot, implementing backend services for product management, authentication, and order workflows.</p>
+            <div class="project-links">
+              <a href="https://github.com/DragonB0i/Ecommerce" target="_blank" rel="noopener" class="project-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                Source
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider reveal">
+
+    <!-- 05. Technical Skills Section -->
+    <section id="skills">
+      <canvas id="canvas-skills" class="section-canvas"></canvas>
+      <div class="section-header reveal">
+        <span class="section-number">05 // STACK_PROFILE</span>
+        <h2 class="section-title">Skills Inventory</h2>
+      </div>
+
+      <p class="skills-intro reveal">
+        Here is a breakdown of my engineering capabilities and language/framework mastery:
+      </p>
+
+      <div class="skills-grid">
+        <!-- Category 1: Experienced -->
+        <div class="skills-category reveal">
+          <h3 class="category-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            Experienced
+          </h3>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Python</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Java</span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="88%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2: Intermediate -->
+        <div class="skills-category reveal">
+          <h3 class="category-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Intermediate
+          </h3>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Node.js</span>
+                <span class="skill-percent">78%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="78%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Computer Networks</span>
+                <span class="skill-percent">80%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="80%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Spring Boot</span>
+                <span class="skill-percent">75%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3: Familiar -->
+        <div class="skills-category reveal">
+          <h3 class="category-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Familiar
+          </h3>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">REST APIs</span>
+                <span class="skill-percent">65%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="65%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Low-Level Programming (C/Assembly)</span>
+                <span class="skill-percent">60%</span>
+              </div>
+              <div class="skill-bar-container">
+                <div class="skill-bar" data-percent="60%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider reveal">
+
+    <!-- 06. Get In Touch Section -->
+    <section id="contact">
+      <canvas id="canvas-contact" class="section-canvas"></canvas>
+      <div class="section-header reveal">
+        <span class="section-number">06 // LINK_COMMUNICATION</span>
+        <h2 class="section-title">Get In Touch</h2>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Left Column: Hanging Lanyard Card -->
+        <div class="lanyard-container-wrapper reveal">
+          <div class="lanyard-wrapper">
+            <div class="lanyard-strap"></div>
+            <div class="lanyard-clip"></div>
+            
+            <div class="lanyard-card">
+              <div class="lanyard-card-inner">
+                <div class="lanyard-header">
+                  <span class="lanyard-badge-title">MISSION CONTROL</span>
+                  <div class="lanyard-header-dots">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+                
+                <div class="lanyard-avatar">
+                  <img src="profile.png?v=2" alt="Yagneswar B Profile">
+                  <div class="lanyard-avatar-glare"></div>
+                </div>
+                
+                <div class="lanyard-details">
+                  <h3 class="lanyard-name">YAGNESWAR B</h3>
+                  <p class="lanyard-role">BACKEND &amp; SYSTEMS DEVELOPER</p>
+                  
+                  <div class="lanyard-divider"></div>
+                  
+                  <p class="lanyard-tagline">"Securing systems &amp; engineering low-level backends, one line of C/Python at a time."</p>
+                  
+                  <div class="lanyard-constellation">
+                    <svg viewBox="0 0 100 30" class="minimal-constellation">
+                      <circle cx="20" cy="15" r="1.5" fill="#fff"/>
+                      <circle cx="50" cy="10" r="1.5" fill="#fff"/>
+                      <circle cx="80" cy="20" r="1.5" fill="#fff"/>
+                      <line x1="20" y1="15" x2="50" y2="10" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+                      <line x1="50" y1="10" x2="80" y2="20" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+                    </svg>
+                  </div>
+                  
+                  <div class="lanyard-footer">
+                    <span class="lanyard-id">ID: 2023-SRM-CS</span>
+                    <span class="lanyard-status">DEPT: SECURITY</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Contact info & Links -->
+        <div class="contact-info-column reveal">
+          <p class="contact-message" style="margin-bottom: 2.5rem; text-align: left;">
+            My transmission gates are always open. If you have an internship role, a project idea, or simply want to connect, feel free to reach out directly through the signals below!
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- Email -->
+            <a href="mailto:bhavanamyagneswar@gmail.com" class="contact-method-card" style="flex-direction: column; text-align: center; padding: 2rem; gap: 1.25rem;">
+              <div class="contact-icon-wrapper" style="margin: 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-label">EMAIL_SIGNAL</span>
+                <span class="contact-value" style="display: block; margin-top: 0.5rem; word-break: break-all;">bhavanamyagneswar@gmail.com</span>
+              </div>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/yagneswar-b-278944295/" target="_blank" rel="noopener" class="contact-method-card" style="flex-direction: column; text-align: center; padding: 2rem; gap: 1.25rem;">
+              <div class="contact-icon-wrapper" style="margin: 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-label">LINKEDIN_GATE</span>
+                <span class="contact-value" style="display: block; margin-top: 0.5rem; word-break: break-all;">linkedin.com/in/yagneswar-b</span>
+              </div>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/DragonB0i" target="_blank" rel="noopener" class="contact-method-card" style="flex-direction: column; text-align: center; padding: 2rem; gap: 1.25rem;">
+              <div class="contact-icon-wrapper" style="margin: 0 auto;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+              </div>
+              <div>
+                <span class="contact-label">GITHUB_REPOSITORY</span>
+                <span class="contact-value" style="display: block; margin-top: 0.5rem; word-break: break-all;">github.com/DragonB0i</span>
+              </div>
+            </a>
+          </div>
+          
+          <!-- Additional details -->
+          <p style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim); margin-top: 2rem; text-align: center;">
+            CONTACT_PHONE: +91 9966992004 // LOC: Chennai, India
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        &lt;YAGNESWAR .B&gt;
+      </div>
+      <div class="footer-credits">
+        DESIGNED &amp; BUILT BY <span>YAGNESWAR B</span> &copy; 2026
+      </div>
+      <div>
+        STATUS: SECURED
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>
