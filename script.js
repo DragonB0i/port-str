@@ -1157,7 +1157,155 @@ document.addEventListener('DOMContentLoaded', () => {
   if (lanyardCard && !prefersReducedMotion) {
     animateLanyard(0);
   }
+  // -------------------------------------------------------------
+  // 7c. Interactive Profile Spotlight Color Reveal (About Me)
+  // -------------------------------------------------------------
+  const avatarContainer = document.querySelector('.avatar-container');
+  const avatarColorImg = document.querySelector('.avatar-color-img');
 
+  if (avatarContainer && avatarColorImg) {
+    if (prefersReducedMotion) {
+      avatarContainer.addEventListener('mouseenter', () => {
+        avatarColorImg.style.setProperty('--reveal-opacity', '1');
+        avatarColorImg.style.setProperty('--reveal-radius', '400px');
+        avatarColorImg.style.setProperty('--reveal-radius-fade', '400px');
+      });
+      avatarContainer.addEventListener('mouseleave', () => {
+        avatarColorImg.style.setProperty('--reveal-opacity', '0');
+        avatarColorImg.style.setProperty('--reveal-radius', '0px');
+        avatarColorImg.style.setProperty('--reveal-radius-fade', '0px');
+      });
+    } else {
+      let mouseX = 154;
+      let mouseY = 154;
+      let currentX = 154;
+      let currentY = 154;
+      let currentRadius = 0;
+      let targetRadius = 0;
+      let currentOpacity = 0;
+      let targetOpacity = 0;
+
+      let isHovered = false;
+      let isTapped = false;
+      let tapTimeout = null;
+      let animationFrameId = null;
+      let containerRect = null;
+
+      function updateContainerRect() {
+        containerRect = avatarContainer.getBoundingClientRect();
+      }
+
+      function animateSpotlight() {
+        currentX += (mouseX - currentX) * 0.1;
+        currentY += (mouseY - currentY) * 0.1;
+        currentRadius += (targetRadius - currentRadius) * 0.12;
+        currentOpacity += (targetOpacity - currentOpacity) * 0.12;
+
+        avatarColorImg.style.setProperty('--mouse-x', `${currentX.toFixed(1)}px`);
+        avatarColorImg.style.setProperty('--mouse-y', `${currentY.toFixed(1)}px`);
+        avatarColorImg.style.setProperty('--reveal-radius', `${currentRadius.toFixed(1)}px`);
+        avatarColorImg.style.setProperty('--reveal-radius-fade', `${(currentRadius + 60).toFixed(1)}px`);
+        avatarColorImg.style.setProperty('--reveal-opacity', currentOpacity.toFixed(3));
+
+        const diffX = Math.abs(mouseX - currentX);
+        const diffY = Math.abs(mouseY - currentY);
+        const diffRad = Math.abs(targetRadius - currentRadius);
+        const diffOp = Math.abs(targetOpacity - currentOpacity);
+
+        if (diffX > 0.05 || diffY > 0.05 || diffRad > 0.05 || diffOp > 0.005 || isHovered || isTapped) {
+          animationFrameId = requestAnimationFrame(animateSpotlight);
+        } else {
+          animationFrameId = null;
+        }
+      }
+
+      function triggerSpotlightUpdate() {
+        if (!animationFrameId) {
+          animationFrameId = requestAnimationFrame(animateSpotlight);
+        }
+      }
+
+      avatarContainer.addEventListener('mouseenter', () => {
+        isHovered = true;
+        isTapped = false;
+        if (tapTimeout) clearTimeout(tapTimeout);
+        updateContainerRect();
+        targetRadius = 90;
+        targetOpacity = 1;
+        triggerSpotlightUpdate();
+      });
+
+      avatarContainer.addEventListener('mousemove', (e) => {
+        if (!containerRect) updateContainerRect();
+        mouseX = e.clientX - containerRect.left;
+        mouseY = e.clientY - containerRect.top;
+        triggerSpotlightUpdate();
+      });
+
+      avatarContainer.addEventListener('mouseleave', () => {
+        isHovered = false;
+        targetRadius = 0;
+        targetOpacity = 0;
+        triggerSpotlightUpdate();
+      });
+
+      avatarContainer.addEventListener('touchstart', (e) => {
+        isHovered = true;
+        isTapped = false;
+        if (tapTimeout) clearTimeout(tapTimeout);
+        updateContainerRect();
+        const touch = e.touches[0];
+        mouseX = touch.clientX - containerRect.left;
+        mouseY = touch.clientY - containerRect.top;
+        targetRadius = 90;
+        targetOpacity = 1;
+        triggerSpotlightUpdate();
+      }, { passive: true });
+
+      avatarContainer.addEventListener('touchmove', (e) => {
+        if (!containerRect) updateContainerRect();
+        const touch = e.touches[0];
+        mouseX = touch.clientX - containerRect.left;
+        mouseY = touch.clientY - containerRect.top;
+        triggerSpotlightUpdate();
+      }, { passive: true });
+
+      avatarContainer.addEventListener('touchend', () => {
+        isHovered = false;
+        targetRadius = 0;
+        targetOpacity = 0;
+        triggerSpotlightUpdate();
+      });
+
+      avatarContainer.addEventListener('click', () => {
+        isTapped = true;
+        if (tapTimeout) clearTimeout(tapTimeout);
+        updateContainerRect();
+        
+        mouseX = containerRect.width / 2;
+        mouseY = containerRect.height / 2;
+        targetRadius = 400;
+        targetOpacity = 1;
+        triggerSpotlightUpdate();
+
+        tapTimeout = setTimeout(() => {
+          isTapped = false;
+          targetRadius = 0;
+          targetOpacity = 0;
+          triggerSpotlightUpdate();
+        }, 2500);
+      });
+
+      window.addEventListener('resize', () => {
+        updateContainerRect();
+        triggerSpotlightUpdate();
+      });
+      window.addEventListener('scroll', () => {
+        updateContainerRect();
+        triggerSpotlightUpdate();
+      }, { passive: true });
+    }
+  }
   function getScrollPercent(el) {
     const rect = el.getBoundingClientRect();
     const viewHeight = window.innerHeight;
