@@ -292,20 +292,29 @@ document.addEventListener('DOMContentLoaded', () => {
     aboutStars = [];
     const count = prefersReducedMotion ? 20 : 80;
     for (let i = 0; i < count; i++) {
+      const r = Math.random();
+      let size;
+      if (r < 0.6) {
+        size = Math.random() * 0.6 + 0.6; // small (0.6 - 1.2)
+      } else if (r < 0.9) {
+        size = Math.random() * 1.3 + 1.2; // medium (1.2 - 2.5)
+      } else {
+        size = Math.random() * 2.5 + 2.5; // large (2.5 - 5.0)
+      }
       aboutStars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.8 + 0.6,
+        size: size,
         twinkleSpeed: Math.random() * 0.03 + 0.01,
         phase: Math.random() * Math.PI * 2,
-        trailLength: Math.random() * 18 + 10
+        trailLength: size * 8 + Math.random() * 10
       });
     }
   }
 
   function drawAbout(ctx, canvas, scrollPercent) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const driftY = scrollPercent * 180; // stars drift downward on scroll
+    const driftY = scrollPercent * 350; // stars drift downward on scroll
 
     aboutStars.forEach(star => {
       star.phase += star.twinkleSpeed;
@@ -314,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Draw faint trails
       if (!prefersReducedMotion && scrollPercent > 0.01) {
-        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.2})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.35})`;
         ctx.lineWidth = star.size * 0.6;
         ctx.beginPath();
         ctx.moveTo(star.x, drawY);
@@ -341,10 +350,10 @@ document.addEventListener('DOMContentLoaded', () => {
       academicParticles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.5 + 0.8,
+        size: Math.random() * 2.0 + 1.2,
         speed: Math.random() * 0.7 + 0.3,
-        opacity: Math.random() * 0.6 + 0.4,
-        trailLength: Math.random() * 45 + 25
+        opacity: Math.random() * 0.3 + 0.7,
+        trailLength: Math.random() * 60 + 30
       });
     }
   }
@@ -365,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Soft glow trail gradient
       if (!prefersReducedMotion) {
         const grad = ctx.createLinearGradient(p.x, p.y, p.x, p.y - p.trailLength);
-        grad.addColorStop(0, `rgba(255, 255, 255, ${p.opacity * 0.5})`);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${p.opacity * 0.7})`);
         grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.strokeStyle = grad;
         ctx.lineWidth = p.size;
@@ -415,6 +424,20 @@ document.addEventListener('DOMContentLoaded', () => {
         alpha: Math.random() * 0.6 + 0.2
       });
     }
+
+    // Initialize with multiple active overlapping ripples
+    if (!prefersReducedMotion) {
+      for (let j = 0; j < 3; j++) {
+        experienceRipples.push({
+          x: canvas.width * (0.2 + Math.random() * 0.6),
+          y: canvas.height * (0.3 + Math.random() * 0.4),
+          r: Math.random() * 200 + 10,
+          maxR: Math.random() * 400 + 300,
+          speed: Math.random() * 1.0 + 0.8,
+          opacity: 0.75
+        });
+      }
+    }
   }
 
   function addExperienceRipple(canvas) {
@@ -423,7 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
       x: canvas.width * (0.2 + Math.random() * 0.6),
       y: canvas.height * (0.3 + Math.random() * 0.4),
       r: 2,
-      maxR: Math.random() * 120 + 80,
+      maxR: Math.random() * 400 + 300,
       speed: Math.random() * 1.0 + 0.8,
       opacity: 0.75
     });
@@ -443,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create ripples periodically
     if (!prefersReducedMotion && activeLoops['canvas-experience']) {
       rippleTimer++;
-      if (rippleTimer > 200) { // every ~3.3s
+      if (rippleTimer > 120) { // every ~2s (more overlapping ripples)
         addExperienceRipple(canvas);
         rippleTimer = 0;
       }
@@ -451,16 +474,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render ripples
     experienceRipples.forEach((ripple, index) => {
-      ripple.r += ripple.speed;
+      // Propagation speed responsive to scroll
+      ripple.r += ripple.speed * (1.0 + scrollPercent * 1.5);
       ripple.opacity = 1.0 - (ripple.r / ripple.maxR);
 
       if (ripple.opacity <= 0 || ripple.r >= ripple.maxR) {
         experienceRipples.splice(index, 1);
       } else {
-        ctx.strokeStyle = `rgba(255, 255, 255, ${ripple.opacity * 0.4})`;
-        ctx.lineWidth = 1.75;
+        // Vertical shift responsive to scroll
+        const drawY = ripple.y + scrollPercent * 100;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${ripple.opacity * 0.65})`;
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.arc(ripple.x, ripple.y, ripple.r, 0, Math.PI * 2);
+        ctx.arc(ripple.x, drawY, ripple.r, 0, Math.PI * 2);
         ctx.stroke();
       }
     });
@@ -476,13 +502,22 @@ document.addEventListener('DOMContentLoaded', () => {
     projectsStars = [];
     projectsStarfall = [];
 
-    // Background stars
+    // Background stars with variation
     const count = 75;
     for (let i = 0; i < count; i++) {
+      const r = Math.random();
+      let size;
+      if (r < 0.6) {
+        size = Math.random() * 0.4 + 0.4; // tiny (0.4 - 0.8)
+      } else if (r < 0.9) {
+        size = Math.random() * 1.0 + 0.8; // medium (0.8 - 1.8)
+      } else {
+        size = Math.random() * 1.7 + 1.8; // prominent (1.8 - 3.5)
+      }
       projectsStars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.2 + 0.4,
+        size: size,
         alpha: Math.random() * 0.5 + 0.2
       });
     }
@@ -495,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
         y: Math.random() * canvas.height,
         size: Math.random() * 1.8 + 0.8,
         speed: Math.random() * 3.5 + 1.5,
-        trailLength: Math.random() * 40 + 30,
+        trailLength: Math.random() * 60 + 40,
         alpha: Math.random() * 0.7 + 0.4
       });
     }
@@ -532,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Soft white starfall trail
       if (!prefersReducedMotion) {
         const trailGrad = ctx.createLinearGradient(star.x, drawY, star.x, drawY - star.trailLength);
-        trailGrad.addColorStop(0, `rgba(255, 255, 255, ${star.alpha * 0.45})`);
+        trailGrad.addColorStop(0, `rgba(255, 255, 255, ${star.alpha * 0.7})`);
         trailGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.strokeStyle = trailGrad;
         ctx.lineWidth = star.size * 0.8;
@@ -559,25 +594,35 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!canvas) return;
     skillsStars = [];
 
+    // Background stars with size variation
     const count = 45;
     for (let i = 0; i < count; i++) {
+      const r = Math.random();
+      let size;
+      if (r < 0.6) {
+        size = Math.random() * 0.4 + 0.4; // small (0.4 - 0.8)
+      } else if (r < 0.9) {
+        size = Math.random() * 1.0 + 0.8; // medium (0.8 - 1.8)
+      } else {
+        size = Math.random() * 1.4 + 1.8; // large (1.8 - 3.2)
+      }
       skillsStars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 1.2 + 0.4,
+        size: size,
         alpha: Math.random() * 0.5 + 0.2
       });
     }
 
-    // Shooting Star trajectory across the screen
+    // Majestic Cinematic Meteor crossing the night sky
     shootingStar = {
       startX: -150,
       startY: canvas.height * 0.15,
       endX: canvas.width + 150,
       endY: canvas.height * 0.85,
-      size: 4.5,
-      glowSize: 15,
-      trailLength: 240,
+      size: 8,
+      glowSize: 35,
+      trailLength: 350,
       phase: 0
     };
   }
@@ -598,34 +643,51 @@ document.addEventListener('DOMContentLoaded', () => {
       const cx = shootingStar.startX + scrollPercent * (shootingStar.endX - shootingStar.startX);
       const cy = shootingStar.startY + scrollPercent * (shootingStar.endY - shootingStar.startY);
       
-      shootingStar.phase += 0.08;
-      const glowAlpha = Math.sin(shootingStar.phase) * 0.3 + 0.7;
+      shootingStar.phase += 0.05;
+      const glowAlpha = Math.sin(shootingStar.phase) * 0.15 + 0.85;
 
-      // Shooting star diagonal trail
+      // Shooting star diagonal trails
       if (!prefersReducedMotion) {
         const dx = shootingStar.endX - shootingStar.startX;
         const dy = shootingStar.endY - shootingStar.startY;
         const angle = Math.atan2(dy, dx);
         
-        const trailX = cx - Math.cos(angle) * shootingStar.trailLength;
-        const trailY = cy - Math.sin(angle) * shootingStar.trailLength;
+        // Primary sharp trail
+        const trailX1 = cx - Math.cos(angle) * shootingStar.trailLength;
+        const trailY1 = cy - Math.sin(angle) * shootingStar.trailLength;
 
-        const trailGrad = ctx.createLinearGradient(cx, cy, trailX, trailY);
-        trailGrad.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.6})`);
-        trailGrad.addColorStop(0.25, `rgba(255, 255, 255, ${glowAlpha * 0.3})`);
-        trailGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        const trailGrad1 = ctx.createLinearGradient(cx, cy, trailX1, trailY1);
+        trailGrad1.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.9})`);
+        trailGrad1.addColorStop(0.3, `rgba(255, 255, 255, ${glowAlpha * 0.4})`);
+        trailGrad1.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
-        ctx.strokeStyle = trailGrad;
+        ctx.strokeStyle = trailGrad1;
+        ctx.lineWidth = shootingStar.size * 0.45;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(trailX1, trailY1);
+        ctx.stroke();
+
+        // Secondary wide glow trail
+        const trailX2 = cx - Math.cos(angle) * (shootingStar.trailLength * 1.4);
+        const trailY2 = cy - Math.sin(angle) * (shootingStar.trailLength * 1.4);
+
+        const trailGrad2 = ctx.createLinearGradient(cx, cy, trailX2, trailY2);
+        trailGrad2.addColorStop(0, `rgba(255, 255, 255, ${glowAlpha * 0.3})`);
+        trailGrad2.addColorStop(0.4, `rgba(255, 255, 255, ${glowAlpha * 0.1})`);
+        trailGrad2.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        ctx.strokeStyle = trailGrad2;
         ctx.lineWidth = shootingStar.size * 1.5;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
-        ctx.lineTo(trailX, trailY);
+        ctx.lineTo(trailX2, trailY2);
         ctx.stroke();
       }
 
       // Draw head with glowing shadow effect
       ctx.shadowBlur = shootingStar.glowSize;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.95)';
       ctx.fillStyle = `rgba(255, 255, 255, ${glowAlpha})`;
       ctx.beginPath();
       ctx.arc(cx, cy, shootingStar.size, 0, Math.PI * 2);
